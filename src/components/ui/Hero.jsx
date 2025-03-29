@@ -8,7 +8,12 @@ import BGanimation from "../ux/BGanimation";
 const Hero = () => {
   return (
     <div>
-      <section className="relative pt-12 overflow-hidden bg-black sm:pt-16">
+      <section
+        className="relative pt-12 overflow-hidden bg-black sm:pt-16 bg-cover bg-no-repeat bg-center"
+        style={{
+          backgroundImage: `url('https://preview.cruip.com/open-pro/images/page-illustration.svg')`,
+        }}
+      >
         <BGanimation />
         <div className="relative px-4 mx-auto sm:px-6 lg:px-8 max-w-7xl mt-20">
           <div className="max-w-4xl mx-auto text-center">
@@ -38,7 +43,7 @@ const Hero = () => {
               </span>
             </h1>
 
-            <div className="flex flex-col items-center justify-center px-8 mt-12 space-y-5 sm:space-y-0 sm:px-0 sm:space-x-5 sm:flex-row">
+            <div className="flex flex-col items-center justify-center px-8 mt-12 space-y-3 sm:space-y-0 sm:px-0 sm:space-x-5 sm:flex-row">
               <div className="relative inline-flex items-center justify-center w-full sm:w-auto group">
                 <div className="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-cyan-500 to-purple-500 group-hover:shadow-lg group-hover:shadow-cyan-500/50"></div>
                 <button className="relative inline-flex items-center justify-center w-full px-8 py-3 text-base font-normal text-white bg-black border border-transparent rounded-full sm:w-auto gap-2 group cursor-pointer">
@@ -85,14 +90,7 @@ const Hero = () => {
             </div>
             <div className="relative inset-0 flex justify-center">
               <HeroVideoDialog
-                className="block dark:hidden "
-                animationStyle="from-center"
-                videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
-                thumbnailSrc="https://startup-template-sage.vercel.app/hero-light.png"
-                thumbnailAlt="Hero Video"
-              />
-              <HeroVideoDialog
-                className="hidden dark:block h-280 w-280"
+                className="hidden dark:block md:h-270 h-220 w-280"
                 animationStyle="from-center"
                 videoSrc="https://www.youtube.com/embed/qh3NGpYRG3I?si=4rb-zSdDkVK9qxxb"
                 thumbnailSrc="https://startup-template-sage.vercel.app/hero-dark.png"
