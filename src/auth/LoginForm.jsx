@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, LogIn, ShieldCheck, Rocket } from "lucide-react";
 import { useNavigate } from "react-router";
+import BGanimation from "@/components/ux/BGanimation";
 
 const LoginForm = () => {
   const navigate = useNavigate();
@@ -13,6 +14,7 @@ const LoginForm = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 relative overflow-hidden">
+      <BGanimation />
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(125%_125%_at_50%_10%,#000_40%,#00b8db_100%)] opacity-10" />
         <div

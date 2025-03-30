@@ -2,6 +2,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Mail, Lock, User, UserPlus, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import BGanimation from "@/components/ux/BGanimation";
 
 const RegisterForm = () => {
   const navigate = useNavigate();
@@ -13,7 +14,7 @@ const RegisterForm = () => {
 
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 overflow-hidden relative">
-      {/* Background Grid */}
+      <BGanimation />
       <div className="absolute inset-0 z-0">
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,_var(--tw-gradient-stops))] from-purple-500/10 via-black to-black" />
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_bottom_left,_var(--tw-gradient-stops))] from-cyan-500/10 via-transparent to-transparent" />

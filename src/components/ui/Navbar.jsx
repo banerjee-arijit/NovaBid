@@ -9,8 +9,9 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-[#010101] fixed w-full z-50 border-b border-cyan-500/20">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <>
+      {/* Navbar Container */}
+      <nav className="fixed md:top-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl z-50 px-4 sm:px-6 lg:px-8 bg-white/5 backdrop-blur-3xl border-b border-cyan-500/20 md:rounded-full rounded-none shadow-md shadow-cyan-500/10 ">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-2 relative group">
@@ -24,7 +25,7 @@ const Navbar = () => {
             </span>
           </div>
 
-          {/* Desktop Nav */}
+          {/* Desktop Navigation */}
           <div className="hidden md:flex items-center space-x-6">
             {navItems.map((item) => (
               <a
@@ -37,7 +38,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA */}
+          {/* Desktop CTA */}
           <div className="hidden md:flex">
             <button className="relative group">
               <div className="absolute -inset-px rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-500/50" />
@@ -67,9 +68,9 @@ const Navbar = () => {
             </button>
           </motion.div>
         </div>
-      </div>
+      </nav>
 
-      {/* Blur Overlay */}
+      {/* Mobile Overlay */}
       {isOpen && (
         <div
           onClick={() => setIsOpen(false)}
@@ -77,13 +78,14 @@ const Navbar = () => {
         />
       )}
 
-      {/* Bottom Drawer Mobile Menu */}
+      {/* Bottom Drawer for Mobile Menu */}
       <div
-        className={`fixed bottom-0 left-0 w-full bg-black z-50 transform ${
+        className={`fixed bottom-0 left-0 w-full  bg-black/5 backdrop-blur-3xl z-50 transform ${
           isOpen ? "translate-y-0" : "translate-y-full"
-        } transition-transform duration-300 ease-in-out md:hidden border-t border-cyan-500/20`}
+        } transition-transform duration-300 ease-in-out md:hidden border-t border-cyan-500/20 rounded-t-4xl`}
       >
         <div className="p-6">
+          {/* Header */}
           <div className="flex items-center justify-between mb-6">
             <div className="flex items-center gap-2">
               <Rocket className="h-6 w-6 text-cyan-400" />
@@ -112,7 +114,7 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* CTA Button */}
+          {/* Mobile CTA */}
           <div className="mt-8">
             <button className="relative group w-full">
               <div className="absolute -inset-px rounded-md bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-500/50" />
@@ -125,7 +127,7 @@ const Navbar = () => {
           </div>
         </div>
       </div>
-    </nav>
+    </>
   );
 };
 
