@@ -7,13 +7,15 @@ import { useNavigate } from "react-router";
 
 const Hero = () => {
   const navigate = useNavigate();
-  const handleBtnClick = () => {
+  const handleBtnClick = (e) => {
+    e.preventDefault();
     navigate("/auth/login");
   };
+
   return (
     <div>
       <section
-        className="relative pt-12 overflow-hidden bg-black sm:pt-16 bg-cover bg-no-repeat bg-center"
+        className="relative pt-12 overflow-hidden bg-black sm:pt-16 md:bg-contain  bg-cover max-sm:bg-center  bg-no-repeat "
         style={{
           backgroundImage: `url('https://preview.cruip.com/open-pro/images/page-illustration.svg')`,
         }}

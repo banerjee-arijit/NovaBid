@@ -1,12 +1,19 @@
 import React, { useState } from "react";
 import { Rocket, Menu, X, Sparkles } from "lucide-react";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const navItems = ["Home", "Feature", "About", "Help"];
 const mobileItems = ["Home", "Auctions", "How It Works", "About"];
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [isOpen, setIsOpen] = useState(false);
+
+  const handleBtnClick = (e) => {
+    e.preventDefault();
+    navigate("auth/login");
+  };
 
   return (
     <>
@@ -43,10 +50,13 @@ const Navbar = () => {
             <button className="relative group">
               <div className="absolute -inset-px rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-500/50" />
               <div className="absolute inset-0 rounded-full opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
-              <div className="relative bg-black px-6 py-2 rounded-full border border-cyan-500/50 hover:border-cyan-500 text-cyan-400 flex items-center gap-2">
+              <button
+                className="relative bg-black px-6 py-2 rounded-full border border-cyan-500/50 hover:border-cyan-500 text-cyan-400 flex items-center gap-2 cursor-pointer"
+                onClick={handleBtnClick}
+              >
                 <Sparkles className="h-4 w-4 animate-pulse" />
                 Launch Bid
-              </div>
+              </button>
             </button>
           </div>
 

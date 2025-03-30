@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     element: <App />,
   },
   {
-    path: "/auth/:type",
+    path: "auth/:type",
     element: <AuthPage />,
   },
 ]);
