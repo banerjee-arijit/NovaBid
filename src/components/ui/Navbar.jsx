@@ -130,8 +130,13 @@ const Navbar = () => {
               <div className="absolute -inset-px rounded-md bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-500/50" />
               <div className="absolute inset-0 rounded-full opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
               <div className="relative bg-black px-6 py-2 rounded-md border border-cyan-500/50 hover:border-cyan-500 text-cyan-400 flex items-center gap-2 justify-center">
-                <Sparkles className="h-4 w-4 animate-pulse" />
-                Launch Bid
+                <button
+                  className="flex items-center gap-2"
+                  onClick={handleBtnClick}
+                >
+                  <Sparkles className="h-4 w-4 animate-pulse" />
+                  Launch Bid
+                </button>
               </div>
             </button>
           </div>
