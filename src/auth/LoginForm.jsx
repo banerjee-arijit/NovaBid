@@ -3,8 +3,15 @@ import { motion } from "framer-motion";
 import { Mail, Lock, LogIn, ShieldCheck, Rocket } from "lucide-react";
 import { useNavigate } from "react-router";
 import BGanimation from "@/components/ux/BGanimation";
+import { supabase } from "@/lib/supabase";
+import { useState } from "react";
 
 const LoginForm = () => {
+  const [user, setUser] = useState({
+    email: "",
+    password: "",
+  });
+
   const navigate = useNavigate();
 
   const handleBtnClick = (e) => {
@@ -12,8 +19,31 @@ const LoginForm = () => {
     navigate("/auth/register");
   };
 
+  const handleChange = (e) => {
+    setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleLoginSubmit = async (e) => {
+    e.preventDefault();
+    const { email, password } = user;
+    if (!email || !password) {
+      return alert("Please fill in both fields");
+    }
+
+    const { data, error } = await supabase.auth.signInWithPassword({
+      email: email,
+      password: password,
+    });
+    if (error) {
+      console.error("Login Error:", error.message);
+    } else {
+      console.log(data);
+      navigate("/");
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 relative overflow-hidden">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 relative overflow-hidden ">
       <BGanimation />
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(125%_125%_at_50%_10%,#000_40%,#00b8db_100%)] opacity-10" />
@@ -77,12 +107,16 @@ const LoginForm = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
             className="space-y-6"
+            onSubmit={handleLoginSubmit}
           >
             <div className="space-y-4">
               <div className="relative">
                 <Mail className="absolute top-3 left-3 text-[#00b8db]" />
                 <input
                   type="email"
+                  name="email"
+                  value={user.email}
+                  onChange={handleChange}
                   placeholder="Email"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/50 border border-[#00b8db30] text-white focus:ring-2 focus:ring-[#00b8db] focus:outline-none transition-all duration-300"
                 />
@@ -92,6 +126,9 @@ const LoginForm = () => {
                 <Lock className="absolute top-3 left-3 text-[#00b8db]" />
                 <input
                   type="password"
+                  name="password"
+                  value={user.password}
+                  onChange={handleChange}
                   placeholder="Password"
                   className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/50 border border-[#00b8db30] text-white focus:ring-2 focus:ring-[#00b8db] focus:outline-none transition-all duration-300"
                 />
@@ -111,7 +148,10 @@ const LoginForm = () => {
               </a>
             </div>
 
-            <button className="w-full py-3 px-4 bg-gradient-to-r from-[#00b8db] to-cyan-300 text-black font-semibold rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all duration-300">
+            <button
+              className="w-full py-3 px-4 bg-gradient-to-r from-[#00b8db] to-cyan-300 text-black font-semibold rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all duration-300"
+              type="submit"
+            >
               <LogIn className="w-5 h-5" />
               Sign in
             </button>
