@@ -1,11 +1,15 @@
 import React from "react";
-import { useEffect } from "react";
 import { motion } from "framer-motion";
 import { Gavel, Rocket } from "lucide-react";
 import HeroVideoDialog from "../magicui/hero-video-dialog";
 import BGanimation from "../ux/BGanimation";
+import { useNavigate } from "react-router";
 
 const Hero = () => {
+  const navigate = useNavigate();
+  const handleBtnClick = () => {
+    navigate("/auth/login");
+  };
   return (
     <div>
       <section
@@ -46,7 +50,10 @@ const Hero = () => {
             <div className="flex flex-col items-center justify-center px-8 mt-12 space-y-3 sm:space-y-0 sm:px-0 sm:space-x-5 sm:flex-row">
               <div className="relative inline-flex items-center justify-center w-full sm:w-auto group">
                 <div className="absolute transition-all duration-200 rounded-full -inset-px bg-gradient-to-r from-cyan-500 to-purple-500 group-hover:shadow-lg group-hover:shadow-cyan-500/50"></div>
-                <button className="relative inline-flex items-center justify-center w-full px-8 py-3 text-base font-normal text-white bg-black border border-transparent rounded-full sm:w-auto gap-2 group cursor-pointer">
+                <button
+                  className="relative inline-flex items-center justify-center w-full px-8 py-3 text-base font-normal text-white bg-black border border-transparent rounded-full sm:w-auto gap-2 group cursor-pointer"
+                  onClick={handleBtnClick}
+                >
                   <Rocket className="w-5 h-5 text-white transition-transform duration-300 group-hover:translate-x-1 group-hover:-translate-y-1" />
                   <span>Start Bidding Now</span>
                 </button>
