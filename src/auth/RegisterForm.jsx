@@ -57,9 +57,9 @@ const RegisterForm = () => {
       <Toaster
         toastOptions={{
           style: {
-            background: isDarkMode ? "#0a0a0a" : "#ffffff",
-            color: isDarkMode ? "#00b8db" : "#0a0a0a",
-            border: `1px solid ${isDarkMode ? "#00b8db55" : "#00b8db88"}`,
+            background: "#0a0a0a",
+            color: "#00b8db",
+            border: `1px solid "#00b8db55"`,
           },
         }}
       />
