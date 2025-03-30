@@ -4,6 +4,7 @@ import { Mail, Lock, User, UserPlus, Rocket } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import BGanimation from "@/components/ux/BGanimation";
 import { supabase } from "@/lib/supabase";
+import toast, { Toaster } from "react-hot-toast";
 
 const RegisterForm = () => {
   // ---------------------------- State to manage user input ----------------------------
@@ -53,6 +54,15 @@ const RegisterForm = () => {
   // ---------------------------- UI Section ----------------------------
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 overflow-hidden relative">
+      <Toaster
+        toastOptions={{
+          style: {
+            background: isDarkMode ? "#0a0a0a" : "#ffffff",
+            color: isDarkMode ? "#00b8db" : "#0a0a0a",
+            border: `1px solid ${isDarkMode ? "#00b8db55" : "#00b8db88"}`,
+          },
+        }}
+      />
       {/* ---------------------------- Background animation and grid ---------------------------- */}
       <BGanimation />
       <div className="absolute inset-0 z-0">

@@ -5,6 +5,8 @@ import { useNavigate } from "react-router";
 import BGanimation from "@/components/ux/BGanimation";
 import { supabase } from "@/lib/supabase";
 import { useState } from "react";
+import toast, { Toaster } from "react-hot-toast";
+import Loader from "@/components/ui/Loader";
 
 const LoginForm = () => {
   const [user, setUser] = useState({
@@ -38,6 +40,7 @@ const LoginForm = () => {
       console.error("Login Error:", error.message);
     } else {
       console.log(data);
+      toast.success("Logged In Successfull");
       navigate("/");
     }
   };
@@ -45,6 +48,15 @@ const LoginForm = () => {
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 relative overflow-hidden ">
       <BGanimation />
+      <Toaster
+        toastOptions={{
+          style: {
+            background: "#0a0a0a",
+            color: "#00b8db",
+            border: `1px solid "#00b8db55"`,
+          },
+        }}
+      />
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(125%_125%_at_50%_10%,#000_40%,#00b8db_100%)] opacity-10" />
         <div
