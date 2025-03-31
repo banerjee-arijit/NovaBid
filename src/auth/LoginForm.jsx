@@ -58,7 +58,7 @@ const LoginForm = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: "https://nova-bid.vercel.app/auth/callback",
+        redirectTo: `${window.location.origin}/auth/callback`,
       },
     });
 
