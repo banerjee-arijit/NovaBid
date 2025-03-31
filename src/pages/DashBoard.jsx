@@ -1,7 +1,12 @@
+import Sidebar from "@/components/ui/Sidebar";
 import React from "react";
 
 const DashBoard = () => {
-  return <div>DashBoard</div>;
+  return (
+    <div>
+      <Sidebar />
+    </div>
+  );
 };
 
 export default DashBoard;

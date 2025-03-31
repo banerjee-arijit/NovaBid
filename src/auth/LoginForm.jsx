@@ -62,6 +62,7 @@ const LoginForm = () => {
         redirectTo: `${location.origin}/auth/callback`,
       },
     });
+    console.log(data);
 
     setLoading(false);
 

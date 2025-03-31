@@ -18,7 +18,7 @@ const Navbar = () => {
   return (
     <>
       {/* Navbar Container */}
-      <nav className="fixed md:top-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl z-50 px-4 sm:px-6 lg:px-8 bg-white/5 backdrop-blur-3xl border-b border-cyan-500/20 md:rounded-full rounded-none shadow-md shadow-cyan-500/10 ">
+      <nav className="fixed md:top-4 left-1/2 transform -translate-x-1/2 w-full max-w-3xl z-50 px-4 sm:px-6 lg:px-8 bg-white/5 backdrop-blur-3xl border-b border-cyan-500/20 md:rounded-full rounded-none shadow-md shadow-cyan-500/10">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex items-center gap-2 relative group">
@@ -47,7 +47,7 @@ const Navbar = () => {
 
           {/* Desktop CTA */}
           <div className="hidden md:flex">
-            <button className="relative group">
+            <div className="relative group">
               <div className="absolute -inset-px rounded-full bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-500/50" />
               <div className="absolute inset-0 rounded-full opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
               <button
@@ -57,7 +57,7 @@ const Navbar = () => {
                 <Sparkles className="h-4 w-4 animate-pulse" />
                 Launch Bid
               </button>
-            </button>
+            </div>
           </div>
 
           {/* Mobile Menu Toggle */}
@@ -90,7 +90,7 @@ const Navbar = () => {
 
       {/* Bottom Drawer for Mobile Menu */}
       <div
-        className={`fixed bottom-0 left-0 w-full  bg-black/5 backdrop-blur-3xl z-50 transform ${
+        className={`fixed bottom-0 left-0 w-full bg-black/5 backdrop-blur-3xl z-50 transform ${
           isOpen ? "translate-y-0" : "translate-y-full"
         } transition-transform duration-300 ease-in-out md:hidden border-t border-cyan-500/20 rounded-t-4xl`}
       >
@@ -124,21 +124,19 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* Mobile CTA */}
+          {/* Mobile CTA - FIXED BUTTON NESTING */}
           <div className="mt-8">
-            <button className="relative group w-full">
+            <div className="relative group w-full">
               <div className="absolute -inset-px rounded-md bg-gradient-to-r from-cyan-500 to-purple-500 transition-all duration-300 group-hover:shadow-lg group-hover:shadow-cyan-500/50" />
               <div className="absolute inset-0 rounded-full opacity-40 group-hover:opacity-75 transition duration-1000 group-hover:duration-200" />
-              <div className="relative bg-black px-6 py-2 rounded-md border border-cyan-500/50 hover:border-cyan-500 text-cyan-400 flex items-center gap-2 justify-center">
-                <button
-                  className="flex items-center gap-2"
-                  onClick={handleBtnClick}
-                >
-                  <Sparkles className="h-4 w-4 animate-pulse" />
-                  Launch Bid
-                </button>
-              </div>
-            </button>
+              <button
+                className="relative bg-black px-6 py-2 w-full rounded-md border border-cyan-500/50 hover:border-cyan-500 text-cyan-400 flex items-center gap-2 justify-center"
+                onClick={handleBtnClick}
+              >
+                <Sparkles className="h-4 w-4 animate-pulse" />
+                Launch Bid
+              </button>
+            </div>
           </div>
         </div>
       </div>
