@@ -1,5 +1,5 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import LoginForm from "@/auth/LoginForm";
 import RegisterForm from "@/auth/RegisterForm";
 
@@ -9,7 +9,8 @@ const AuthPage = () => {
   return (
     <>
       {type === "login" && <LoginForm />}
-      {type === "register" && <RegisterForm />}\{" "}
+      {type === "register" && <RegisterForm />}
+      {type === 'callback' && <Navigate replace to="/dashboard" />}
     </>
   );
 };
