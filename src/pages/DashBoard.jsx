@@ -3,7 +3,7 @@ import React from "react";
 
 const DashBoard = () => {
   return (
-    <div>
+    <div className="bg-black h-screen">
       <Sidebar />
     </div>
   );
