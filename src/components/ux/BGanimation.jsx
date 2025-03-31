@@ -6,7 +6,7 @@ const BGanimation = () => {
   return (
     <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden">
       {[...Array(starCount)].map((_, i) => {
-        const size = `${Math.random() * 2 + 1}px`; // 1px to 3px stars
+        const size = `${Math.random() * 2 + 1}px`;
         const top = `${Math.random() * 100}%`;
         const left = `${Math.random() * 100}%`;
         const twinkleDelay = `${Math.random() * 5}s`;

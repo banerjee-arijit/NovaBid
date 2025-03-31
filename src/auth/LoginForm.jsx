@@ -67,6 +67,7 @@ const LoginForm = () => {
       console.error(error);
     } else {
       toast.success("Google sign-in successful");
+      navigate("/dashboard");
     }
   };
 

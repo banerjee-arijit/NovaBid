@@ -5,7 +5,7 @@ const FeatureCard = ({ icon: Icon, title, description, delay, gradient }) => {
   const [hoverStyle, setHoverStyle] = useState({});
 
   const handleMouseMove = (e) => {
-    if (window.innerWidth < 1024) return; // lg: and above
+    if (window.innerWidth < 1024) return;
     const rect = e.currentTarget.getBoundingClientRect();
     const x = e.clientX - rect.left;
     const y = e.clientY - rect.top;
