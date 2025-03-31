@@ -58,9 +58,6 @@ const LoginForm = () => {
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
-      options: {
-        skipBrowserRedirect: true,
-      },
     });
 
     setLoading(false);
@@ -119,7 +116,6 @@ const LoginForm = () => {
           </motion.div>
         </div>
 
-        {/* Right Side - Login Form */}
         <div className="p-8 md:p-12">
           <motion.div
             initial={{ opacity: 0, y: -20 }}
