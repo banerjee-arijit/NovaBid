@@ -5,10 +5,11 @@ import { useNavigate } from "react-router";
 import BGanimation from "@/components/ux/BGanimation";
 import { supabase } from "@/lib/supabase";
 import { useState } from "react";
-import toast, { Toaster } from "react-hot-toast";
-import Loader from "@/components/ui/Loader";
+import toast from "react-hot-toast";
+import ReactToaster from "@/components/ui/Toaster";
 
 const LoginForm = () => {
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -28,16 +29,22 @@ const LoginForm = () => {
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
     const { email, password } = user;
-    if (!email || !password) {
-      return alert("Please fill in both fields");
+    if (!user.email || !user.password) {
+      toast.error("Please fill in both fields");
+      return;
     }
+
+    setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithPassword({
       email: email,
       password: password,
     });
+
+    setLoading(false);
+
     if (error) {
-      console.error("Login Error:", error.message);
+      toast.error("Invalid email or password");
     } else {
       console.log(data);
       toast.success("Logged In Successfull");
@@ -45,18 +52,31 @@ const LoginForm = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    setLoading(true);
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "google",
+      options: {
+        redirectTo: window.location.origin,
+      },
+    });
+
+    setLoading(false);
+
+    if (error) {
+      toast.error("Google sign-in failed");
+      console.error(error);
+    } else {
+      toast.success("Google sign-in successful");
+      navigate("/");
+    }
+  };
+
   return (
     <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 relative overflow-hidden ">
       <BGanimation />
-      <Toaster
-        toastOptions={{
-          style: {
-            background: "#0a0a0a",
-            color: "#00b8db",
-            border: `1px solid "#00b8db55"`,
-          },
-        }}
-      />
+      <ReactToaster />
       <div className="absolute inset-0 -z-10">
         <div className="absolute inset-0 bg-[radial-gradient(125%_125%_at_50%_10%,#000_40%,#00b8db_100%)] opacity-10" />
         <div
@@ -68,10 +88,8 @@ const LoginForm = () => {
           }}
         />
       </div>
-
-      {/* Login Container */}
+      ={" "}
       <div className="relative z-10 w-full max-w-5xl bg-[#000000d8] backdrop-blur-xl border border-[#00b8db]/10 rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
-        {/* Left Side */}
         <div className="hidden md:flex flex-col items-center justify-center p-12 bg-gradient-to-br from-[#00b8db10] via-black to-[#5b21b610] border-r border-[#00b8db]/10">
           <motion.div
             initial={{ scale: 0 }}
@@ -122,29 +140,22 @@ const LoginForm = () => {
             onSubmit={handleLoginSubmit}
           >
             <div className="space-y-4">
-              <div className="relative">
-                <Mail className="absolute top-3 left-3 text-[#00b8db]" />
-                <input
-                  type="email"
-                  name="email"
-                  value={user.email}
-                  onChange={handleChange}
-                  placeholder="Email"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/50 border border-[#00b8db30] text-white focus:ring-2 focus:ring-[#00b8db] focus:outline-none transition-all duration-300"
-                />
-              </div>
-
-              <div className="relative">
-                <Lock className="absolute top-3 left-3 text-[#00b8db]" />
-                <input
-                  type="password"
-                  name="password"
-                  value={user.password}
-                  onChange={handleChange}
-                  placeholder="Password"
-                  className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/50 border border-[#00b8db30] text-white focus:ring-2 focus:ring-[#00b8db] focus:outline-none transition-all duration-300"
-                />
-              </div>
+              <InputField
+                icon={<Mail />}
+                type="email"
+                name="email"
+                placeholder="Email"
+                value={user.email}
+                onChange={handleChange}
+              />
+              <InputField
+                icon={<Lock />}
+                type="password"
+                name="password"
+                placeholder="Password"
+                value={user.password}
+                onChange={handleChange}
+              />
             </div>
 
             <div className="flex items-center justify-between text-sm text-neutral-400">
@@ -179,7 +190,10 @@ const LoginForm = () => {
               </div>
             </div>
 
-            <button className="w-full py-3 px-4 border border-[#00b8db30] hover:border-[#00b8db] text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-300">
+            <button
+              className="w-full py-3 px-4 border border-[#00b8db30] hover:border-[#00b8db] text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
+              onClick={handleGoogleSignIn}
+            >
               <ShieldCheck className="w-5 h-5 text-[#00b8db]" />
               Sign in with Google
             </button>
@@ -199,5 +213,19 @@ const LoginForm = () => {
     </div>
   );
 };
+
+const InputField = ({ icon, type, name, placeholder, value, onChange }) => (
+  <div className="relative">
+    <span className="absolute top-3 left-3 text-cyan-400">{icon}</span>
+    <input
+      type={type}
+      name={name}
+      placeholder={placeholder}
+      value={value}
+      onChange={onChange}
+      className="w-full pl-10 pr-4 py-3 rounded-xl bg-black/40 border border-cyan-500/20 text-white focus:ring-2 focus:ring-cyan-500 focus:border-transparent outline-none transition-all duration-300"
+    />
+  </div>
+);
 
 export default LoginForm;

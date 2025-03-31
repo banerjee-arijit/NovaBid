@@ -9,7 +9,7 @@ const AuthPage = () => {
   return (
     <>
       {type === "login" && <LoginForm />}
-      {type === "register" && <RegisterForm />}
+      {type === "register" && <RegisterForm />}\{" "}
     </>
   );
 };
