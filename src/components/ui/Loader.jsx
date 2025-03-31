@@ -61,7 +61,6 @@ export default function Loader() {
         ></motion.div>
       </div>
 
-      {/* Bottom Message */}
       <p className="mt-8 text-cyan-400 text-sm sm:text-base tracking-wide font-light animate-pulse z-[10]">
         Powering your futuristic auction experience...
       </p>

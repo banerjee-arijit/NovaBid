@@ -52,11 +52,15 @@ const LoginForm = () => {
     }
   };
 
-  const handleGoogleSignIn = async () => {
+  const handleGoogleSignIn = async (e) => {
+    e.preventDefault();
     setLoading(true);
 
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
+      options: {
+        skipBrowserRedirect: true,
+      },
     });
 
     setLoading(false);
