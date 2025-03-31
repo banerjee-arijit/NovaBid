@@ -59,8 +59,8 @@ const LoginForm = () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
-        redirectTo: `${location.origin}/auth/callback`
-      }
+        redirectTo: `${location.origin}/auth/callback`,
+      },
     });
 
     setLoading(false);
@@ -69,8 +69,7 @@ const LoginForm = () => {
       toast.error("Google sign-in failed");
       console.error(error);
     } else {
-      toast.success("Google sign-in successful");
-      navigate("/dashboard");
+      toast.loading("Redirecting for google login");
     }
   };
 
