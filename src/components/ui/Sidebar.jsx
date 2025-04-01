@@ -10,10 +10,11 @@ import {
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useNavigate, useLocation } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import UserProfileDrawer from "./UserProfileDrawer";
 
 const navItems = [
-  { icon: <Home size={22} />, text: "Home", active: true, path: "/dashboard" },
+  { icon: <Home size={22} />, text: "Home", path: "/dashboard" },
   { icon: <Gavel size={22} />, text: "Auctions", path: "/dashboard/auction" },
 ];
 
@@ -21,6 +22,7 @@ const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false); // Drawer state
 
   const navigate = useNavigate();
 
@@ -31,10 +33,10 @@ const Sidebar = () => {
     return () => window.removeEventListener("resize", checkScreen);
   }, []);
 
-  const handleToggle = () => setExpanded((prev) => !prev);
-
   return (
     <>
+      <UserProfileDrawer open={isDrawerOpen} setOpen={setIsDrawerOpen} />
+
       {!isMobile && (
         <motion.div
           className="hidden md:flex"
@@ -44,8 +46,6 @@ const Sidebar = () => {
         >
           <aside className="min-h-screen">
             <nav className="h-full flex flex-col bg-[#111623] border-r border-[#00b8db33] shadow-lg w-full relative">
-              <div className="absolute inset-y-0 right-0 w-[1px] bg-gradient-to-b from-transparent via-[#00b8db] to-transparent opacity-50" />
-
               <motion.div
                 className="p-4 pb-2 flex justify-between items-center"
                 whileHover={{ scale: 1.02 }}
@@ -65,7 +65,7 @@ const Sidebar = () => {
                 </div>
                 <motion.button
                   className="p-1.5 rounded-lg bg-[#1e293b] hover:bg-[#334155] text-cyan-400 transition-colors duration-300"
-                  onClick={handleToggle}
+                  onClick={() => setExpanded((prev) => !prev)}
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.95 }}
                 >
@@ -87,9 +87,11 @@ const Sidebar = () => {
                 ))}
               </ul>
 
-              <motion.div
-                className="border-t border-[#00b8db33] flex items-center p-3"
+              {/* User Profile Button - Opens Drawer */}
+              <motion.button
+                className="border-t border-[#00b8db33] flex items-center p-3 cursor-pointer"
                 whileHover={{ backgroundColor: "rgba(0, 184, 219, 0.05)" }}
+                onClick={() => setIsDrawerOpen(true)} // Open Drawer
               >
                 <motion.div
                   whileHover={{ scale: 1.1 }}
@@ -115,12 +117,11 @@ const Sidebar = () => {
                     <MoreVertical size={20} className="ml-2 text-cyan-400" />
                   </motion.div>
                 </div>
-              </motion.div>
+              </motion.button>
             </nav>
           </aside>
         </motion.div>
       )}
-
       {isMobile && (
         <motion.nav
           className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-[#111623]/90 backdrop-blur-lg text-white p-2 rounded-2xl flex gap-2 shadow-[0_0_15px_rgba(0,184,219,0.3)] w-11/12 justify-around border border-[#00b8db44]"
@@ -155,6 +156,17 @@ const Sidebar = () => {
                 </span>
               </motion.div>
             ))}
+            <motion.div
+              className="relative flex flex-col items-center p-2 cursor-pointer rounded-xl text-gray-400"
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setIsDrawerOpen(true)}
+            >
+              <User className="relative z-10 text-2xl" />
+              <span className="relative z-10 text-xs mt-1 opacity-80">
+                Profile
+              </span>
+            </motion.div>
           </AnimatePresence>
         </motion.nav>
       )}
@@ -176,18 +188,8 @@ const SidebarItem = ({ icon, text, active, expanded, path }) => {
       whileTap={{ scale: 0.98 }}
     >
       <motion.div whileHover={{ scale: 1.1 }} className="relative">
-        {React.cloneElement(icon, {
-          className: "text-inherit",
-        })}
-        {active && (
-          <motion.div
-            className="absolute inset-0 bg-[#00b8db] blur-lg opacity-30"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 0.3 }}
-          />
-        )}
+        {React.cloneElement(icon, { className: "text-inherit" })}
       </motion.div>
-
       <span
         className={`transition-all duration-300 overflow-hidden ${
           expanded ? "w-32 ml-3" : "w-0"
@@ -195,17 +197,6 @@ const SidebarItem = ({ icon, text, active, expanded, path }) => {
       >
         {text}
       </span>
-
-      {!expanded && (
-        <motion.div
-          className="absolute left-full top-1/2 -translate-y-1/2 ml-3 bg-[#111623] border border-[#00b8db44] text-cyan-300 text-sm px-3 py-1.5 rounded-lg shadow-[0_0_15px_rgba(0,184,219,0.2)] opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none"
-          initial={{ x: -10, opacity: 0 }}
-          whileHover={{ x: 0, opacity: 1 }}
-        >
-          {text}
-          <div className="absolute left-0 top-1/2 -translate-x-1 -translate-y-1/2 w-2 h-2 bg-[#111623] border-l border-t border-[#00b8db44] transform rotate-45" />
-        </motion.div>
-      )}
     </motion.li>
   );
 };
