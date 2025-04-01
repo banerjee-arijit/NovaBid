@@ -1,12 +1,14 @@
-import ProtectedAuthRoute from "@/components/ui/ProtectedAuthRoute";
-import Sidebar from "@/components/ui/Sidebar";
 import React from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "@/components/ui/Sidebar";
 
 const DashBoard = () => {
   return (
-    <div className="bg-black h-screen">
+    <div className="flex">
       <Sidebar />
-      <ProtectedAuthRoute />
+      <div className="flex-grow p-4 h-screen flex justify-center items-center bg-black">
+        <Outlet />
+      </div>
     </div>
   );
 };

@@ -10,10 +10,11 @@ import {
 } from "lucide-react";
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 
 const navItems = [
-  { icon: <Home size={22} />, text: "Home", active: true },
-  { icon: <Gavel size={22} />, text: "Auctions" },
+  { icon: <Home size={22} />, text: "Home", active: true, path: "/dashboard" },
+  { icon: <Gavel size={22} />, text: "Auctions", path: "/dashboard/auction" },
   { icon: <User size={22} />, text: "Profile" },
   { icon: <Settings size={22} />, text: "Settings" },
 ];
@@ -22,6 +23,8 @@ const Sidebar = () => {
   const [expanded, setExpanded] = useState(true);
   const [isMobile, setIsMobile] = useState(false);
   const [activeTab, setActiveTab] = useState(0);
+
+  const navigate = useNavigate();
 
   useEffect(() => {
     const checkScreen = () => setIsMobile(window.innerWidth < 768);
@@ -82,6 +85,7 @@ const Sidebar = () => {
                     key={idx}
                     icon={item.icon}
                     text={item.text}
+                    path={item.path}
                     active={idx === activeTab}
                     expanded={expanded}
                     onClick={() => setActiveTab(idx)}
@@ -141,7 +145,10 @@ const Sidebar = () => {
                 }`}
                 whileHover={{ scale: 1.1 }}
                 whileTap={{ scale: 0.95 }}
-                onClick={() => setActiveTab(index)}
+                onClick={() => {
+                  setActiveTab(index);
+                  navigate(item.path);
+                }}
               >
                 {index === activeTab && (
                   <motion.div
@@ -163,10 +170,11 @@ const Sidebar = () => {
   );
 };
 
-const SidebarItem = ({ icon, text, active, expanded, onClick }) => {
+const SidebarItem = ({ icon, text, active, expanded, path }) => {
+  const navigate = useNavigate();
   return (
     <motion.li
-      onClick={onClick}
+      onClick={() => navigate(path)}
       className={`relative flex items-center py-2 px-3 my-1 font-medium rounded-md cursor-pointer transition-colors duration-300 group ${
         active
           ? "bg-gradient-to-r from-[#00b8db22] to-transparent text-[#00b8db]"

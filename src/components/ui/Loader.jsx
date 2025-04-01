@@ -31,7 +31,6 @@ const textVariants = {
 export default function Loader() {
   return (
     <div className="fixed inset-0 z-[9999] flex flex-col items-center justify-center overflow-hidden bg-black">
-      {/* Custom Cyan Grid Background with Radial Fade */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_20%,black)]">
         <div className="absolute inset-0 bg-[linear-gradient(to_right,_rgba(0,184,219,0.1)_1px,_transparent_1px),linear-gradient(to_bottom,_rgba(0,184,219,0.1)_1px,_transparent_1px)] bg-[length:40px_40px]" />
       </div>
