@@ -189,7 +189,7 @@ const MobileNav = ({ setIsDrawerOpen }) => {
 
   return (
     <motion.nav
-      className="fixed bottom-4 left-1/2 z-999 transform -translate-x-1/2 bg-[#111623]/90 backdrop-blur-lg text-white p-2 rounded-2xl flex gap-2 shadow-[0_0_15px_rgba(0,184,219,0.3)] w-11/12 justify-around border border-[#00b8db44]"
+      className="fixed bottom-0 w-full left-1/2 z-999 transform -translate-x-1/2 bg-[#111623]/90 backdrop-blur-lg text-white p-2 rounded-t-3xl flex gap-2 shadow-[0_0_15px_rgba(0,184,219,0.3)]  justify-around border border-[#00b8db44]"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}

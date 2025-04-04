@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import useUserStore from "@/store/userStore";
 import { Search, Bell, User, Plus } from "lucide-react";
+import AuctionCard from "../AuctionCard";
 
 const UserDashBoard = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -15,7 +16,7 @@ const UserDashBoard = () => {
   const firstCharOfName = name?.charAt(0).toUpperCase() || "A";
 
   return (
-    <div className=" bg-[#0a0b10] text-white p-6 rounded-3xl shadow-lg">
+    <div className=" min-h-screen text-white p-6 rounded-3xl shadow-lg">
       <header className="flex items-center gap-4">
         <motion.div
           whileHover={{ scale: 1.1 }}
@@ -59,6 +60,17 @@ const UserDashBoard = () => {
           </div>
         </div>
       </main>
+      <div className="flex justify-between items-center">
+        <div className="flex items-center gap-2 p-4 bg-black/60 backdrop-blur-md border border-cyan-500/10 rounded-2xl shadow-lg text-white w-fit">
+          <span className="text-lg font-semibold text-cyan-400">
+            All Auctions
+          </span>
+        </div>
+        <button className="text-sm text-cyan-400 hover:underline transition">
+          Show More →
+        </button>
+      </div>
+      <AuctionCard />
     </div>
   );
 };
