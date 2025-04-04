@@ -3,9 +3,12 @@ import { motion } from "framer-motion";
 import useUserStore from "@/store/userStore";
 import { Search, Bell, User, Plus } from "lucide-react";
 import AuctionCard from "../AuctionCard";
+import CreateAuctionDrawer from "../CreateAuctionDrawer";
 
 const UserDashBoard = () => {
   const [searchQuery, setSearchQuery] = useState("");
+  const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+
   const { user, fetchSession } = useUserStore();
   const { name, email } = user?.user_metadata || {};
 
@@ -43,7 +46,7 @@ const UserDashBoard = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for auctions, collections, or artists..."
+                placeholder="Search for auctions..."
                 className="w-full md:w-[400px] pl-12 pr-4 py-3 bg-[#1c1d25] rounded-xl border border-gray-800 focus:outline-none focus:border-cyan-500 text-white transition-all shadow-lg backdrop-blur-md"
               />
             </div>
@@ -53,6 +56,7 @@ const UserDashBoard = () => {
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
+              onClick={() => setIsDrawerOpen(true)}
               className="flex items-center px-5 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-md hover:shadow-cyan-500/50"
             >
               <Plus className="w-5 h-5 mr-2" /> Create Auction
@@ -71,6 +75,10 @@ const UserDashBoard = () => {
         </button>
       </div>
       <AuctionCard />
+      <CreateAuctionDrawer
+        isOpen={isDrawerOpen}
+        onClose={() => setIsDrawerOpen(false)}
+      />
     </div>
   );
 };
