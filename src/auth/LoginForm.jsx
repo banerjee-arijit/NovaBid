@@ -1,15 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { motion } from "framer-motion";
-import { Mail, Lock, LogIn, ShieldCheck, Rocket } from "lucide-react";
+import {
+  Mail,
+  Lock,
+  LogIn,
+  ShieldCheck,
+  Rocket,
+  RefreshCw,
+} from "lucide-react";
 import { useNavigate } from "react-router";
 import BGanimation from "@/components/ux/BGanimation";
 import { supabase } from "@/lib/supabase";
-import { useState } from "react";
 import toast from "react-hot-toast";
 import ReactToaster from "@/components/ui/Toaster";
 
 const LoginForm = () => {
   const [loading, setLoading] = useState(false);
+  const [isForgotPassword, setIsForgotPassword] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -24,6 +31,14 @@ const LoginForm = () => {
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
+  };
+
+  const handleForgotPassword = async (e) => {
+    e.preventDefault();
+    if (!user.email) {
+      toast.error("Please enter your email");
+      return;
+    }
   };
 
   const handleLoginSubmit = async (e) => {
@@ -47,7 +62,7 @@ const LoginForm = () => {
       toast.error("Invalid email or password");
     } else {
       console.log(data);
-      toast.success("Logged In Successfull");
+      toast.success("Logged In Successfully");
       navigate("/");
     }
   };
@@ -75,7 +90,7 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 relative overflow-hidden ">
+    <div className="min-h-screen bg-black flex items-center justify-center p-4 md:p-10 relative overflow-hidden">
       <BGanimation />
       <ReactToaster />
       <div className="absolute inset-0 -z-10">
@@ -89,7 +104,6 @@ const LoginForm = () => {
           }}
         />
       </div>
-      ={" "}
       <div className="relative z-10 w-full max-w-5xl bg-[#000000d8] backdrop-blur-xl border border-[#00b8db]/10 rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 md:grid-cols-2">
         <div className="hidden md:flex flex-col items-center justify-center p-12 bg-gradient-to-br from-[#00b8db10] via-black to-[#5b21b610] border-r border-[#00b8db]/10">
           <motion.div
@@ -126,9 +140,13 @@ const LoginForm = () => {
             animate={{ opacity: 1, y: 0 }}
             className="text-center mb-8"
           >
-            <h2 className="text-2xl font-bold text-white">Sign in</h2>
+            <h2 className="text-2xl font-bold text-white">
+              {isForgotPassword ? "Reset Password" : "Sign in"}
+            </h2>
             <p className="text-neutral-400 mt-2">
-              Log in to your NOVA Bid account
+              {isForgotPassword
+                ? "Enter your email to reset your password"
+                : "Log in to your NOVA Bid account"}
             </p>
           </motion.div>
 
@@ -137,7 +155,9 @@ const LoginForm = () => {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.1 }}
             className="space-y-6"
-            onSubmit={handleLoginSubmit}
+            onSubmit={
+              isForgotPassword ? handleForgotPassword : handleLoginSubmit
+            }
           >
             <div className="space-y-4">
               <InputField
@@ -148,65 +168,98 @@ const LoginForm = () => {
                 value={user.email}
                 onChange={handleChange}
               />
-              <InputField
-                icon={<Lock />}
-                type="password"
-                name="password"
-                placeholder="Password"
-                value={user.password}
-                onChange={handleChange}
-              />
-            </div>
-
-            <div className="flex items-center justify-between text-sm text-neutral-400">
-              <label className="flex items-center">
-                <input
-                  type="checkbox"
-                  className="mr-2 rounded border-gray-600"
+              {!isForgotPassword && (
+                <InputField
+                  icon={<Lock />}
+                  type="password"
+                  name="password"
+                  placeholder="Password"
+                  value={user.password}
+                  onChange={handleChange}
                 />
-                Remember me
-              </label>
-              <a href="#" className="text-[#00b8db] hover:underline">
-                Forgot password?
-              </a>
+              )}
             </div>
 
+            {!isForgotPassword && (
+              <div className="flex items-center justify-between text-sm text-neutral-400">
+                <label className="flex items-center">
+                  <input
+                    type="checkbox"
+                    className="mr-2 rounded border-gray-600"
+                  />
+                  Remember me
+                </label>
+                <button
+                  type="button"
+                  onClick={() => setIsForgotPassword(true)}
+                  className="text-[#00b8db] hover:underline"
+                >
+                  Forgot password?
+                </button>
+              </div>
+            )}
+
             <button
-              className="w-full py-3 px-4 bg-gradient-to-r from-[#00b8db] to-cyan-300 text-black font-semibold rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all duration-300"
+              className="w-full py-3 px-4 bg-gradient-to-r from-[#00b8db] to-cyan-300 text-black font-semibold rounded-xl flex items-center justify-center gap-2 hover:scale-[1.02] transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
               type="submit"
+              disabled={loading}
             >
-              <LogIn className="w-5 h-5" />
-              Sign in
+              {loading ? (
+                <RefreshCw className="w-5 h-5 animate-spin" />
+              ) : isForgotPassword ? (
+                "Reset Password"
+              ) : (
+                <>
+                  <LogIn className="w-5 h-5" />
+                  Sign in
+                </>
+              )}
             </button>
 
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-[#00b8db20]"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-2 text-neutral-500 bg-black">
-                  Or continue with
-                </span>
-              </div>
-            </div>
-
-            <button
-              className="w-full py-3 px-4 border border-[#00b8db30] hover:border-[#00b8db] text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
-              onClick={handleGoogleSignIn}
-            >
-              <ShieldCheck className="w-5 h-5 text-[#00b8db]" />
-              Sign in with Google
-            </button>
-
-            <p className="text-center text-neutral-400 text-sm">
-              Don’t have an account?{" "}
+            {isForgotPassword && (
               <button
-                onClick={handleBtnClick}
-                className="text-[#00b8db] hover:text-cyan-300 font-medium cursor-pointer"
+                type="button"
+                onClick={() => setIsForgotPassword(false)}
+                className="w-full text-center text-[#00b8db] hover:underline"
               >
-                Sign up
+                Back to login
               </button>
-            </p>
+            )}
+
+            {!isForgotPassword && (
+              <>
+                <div className="relative my-6">
+                  <div className="absolute inset-0 flex items-center">
+                    <div className="w-full border-t border-[#00b8db20]"></div>
+                  </div>
+                  <div className="relative flex justify-center text-sm">
+                    <span className="px-2 text-neutral-500 bg-black">
+                      Or continue with
+                    </span>
+                  </div>
+                </div>
+
+                <button
+                  type="button"
+                  className="w-full py-3 px-4 border border-[#00b8db30] hover:border-[#00b8db] text-white rounded-xl flex items-center justify-center gap-2 transition-all duration-300"
+                  onClick={handleGoogleSignIn}
+                >
+                  <ShieldCheck className="w-5 h-5 text-[#00b8db]" />
+                  Sign in with Google
+                </button>
+
+                <p className="text-center text-neutral-400 text-sm">
+                  Don't have an account?{" "}
+                  <button
+                    type="button"
+                    onClick={handleBtnClick}
+                    className="text-[#00b8db] hover:text-cyan-300 font-medium cursor-pointer"
+                  >
+                    Sign up
+                  </button>
+                </p>
+              </>
+            )}
           </motion.form>
         </div>
       </div>

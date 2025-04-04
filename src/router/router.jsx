@@ -5,6 +5,7 @@ import DashBoard from "@/pages/DashBoard";
 import ProtectedAuthRoute from "@/components/ui/ProtectedAuthRoute";
 import UserDashBoard from "@/components/ui/subPages/UserDashBoard";
 import DynamicDashboardRoutes from "@/components/ui/features/DynamicDashboardRoutes";
+import ErrorPage from "../pages/ErrorPage";
 
 const router = createBrowserRouter([
   {
@@ -28,8 +29,12 @@ const router = createBrowserRouter([
     ],
   },
   {
+    path: "/error",
+    element: <ErrorPage />,
+  },
+  {
     path: "*",
-    element: <Navigate to="/dashboard" replace />,
+    element: <Navigate to="/error" replace />,
   },
 ]);
 

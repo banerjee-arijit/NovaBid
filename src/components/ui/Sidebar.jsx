@@ -73,7 +73,7 @@ const DesktopNav = ({
     transition={{ duration: 0.5, type: "spring" }}
   >
     <aside className="min-h-screen">
-      <nav className="h-full flex flex-col bg-[#111623] border-r border-[#00b8db33] shadow-lg w-full relative">
+      <nav className="h-full flex flex-col  bg-[#0a0b0f] border-r border-[#00b8db33] shadow-lg w-full relative">
         <NavHeader expanded={expanded} setExpanded={setExpanded} />
         <NavItems expanded={expanded} currentPath={currentPath} />
         <UserProfile
@@ -189,7 +189,7 @@ const MobileNav = ({ setIsDrawerOpen }) => {
 
   return (
     <motion.nav
-      className="fixed bottom-4 left-1/2 transform -translate-x-1/2 bg-[#111623]/90 backdrop-blur-lg text-white p-2 rounded-2xl flex gap-2 shadow-[0_0_15px_rgba(0,184,219,0.3)] w-11/12 justify-around border border-[#00b8db44]"
+      className="fixed bottom-4 left-1/2 z-999 transform -translate-x-1/2 bg-[#111623]/90 backdrop-blur-lg text-white p-2 rounded-2xl flex gap-2 shadow-[0_0_15px_rgba(0,184,219,0.3)] w-11/12 justify-around border border-[#00b8db44]"
       initial={{ y: 100, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
       transition={{ duration: 0.4, ease: "easeOut" }}

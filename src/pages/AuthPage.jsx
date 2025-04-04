@@ -5,12 +5,11 @@ import RegisterForm from "@/auth/RegisterForm";
 
 const AuthPage = () => {
   const { type } = useParams();
-  console.log(type);
   return (
     <>
       {type === "login" && <LoginForm />}
       {type === "register" && <RegisterForm />}
-      {type === 'callback' && <Navigate replace to="/dashboard" />}
+      {type === "callback" && <Navigate replace to="/dashboard" />}
     </>
   );
 };
